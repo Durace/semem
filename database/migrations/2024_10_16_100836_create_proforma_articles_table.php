@@ -18,7 +18,7 @@ return new class extends Migration
             $table->decimal('pu', 10, 2);
             $table->integer('qte');
             $table->decimal('remise', 5, 2)->nullable();
-            $table->string('uv', 50);
+            $table->string('uv', 50)->nullable();
             $table->timestamps();
         });
     }

@@ -20,5 +20,6 @@ class Proforma extends Model
         'commercial',
         'vendeur',
         'da',
+        'precompte',
     ];
 }

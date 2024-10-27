@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('commercial', 191);
             $table->string('vendeur', 191);
             $table->string('da', 191)->nullable();
+            $table->string('precompte', 50)->nullable();
             $table->timestamps();
         });
     }

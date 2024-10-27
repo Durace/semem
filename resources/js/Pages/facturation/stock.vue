@@ -113,11 +113,24 @@ const props = defineProps({
 
 let result_regexp = ref([]);
 
-watch(searchDesignation, (newVal) => {
-    
-    let regex = RegExp(newVal.toUpperCase());
+        watch(searchDesignation, (newVal) => {
 
-    let new_result_regexp = props.stockLists.data.filter(item => regex.test(item.DESIGNATION.toUpperCase()));
+            let regex = RegExp(`^${newVal.toUpperCase()}`);
+            let regexContains = RegExp(newVal.toUpperCase());
+
+            let new_result_regexp = props.stockLists.data.filter(item => regex.test(item.DESIGNATION.toUpperCase()) || regexContains.test(item.DESIGNATION.toUpperCase()));
+
+            // Trier les résultats pour afficher d'abord ceux qui commencent par l'expression recherchée, puis par ordre alphabétique
+            new_result_regexp.sort((a, b) => {
+                if (regex.test(a.DESIGNATION.toUpperCase())) {
+                    return regex.test(b.DESIGNATION.toUpperCase()) ? 0 : -1;
+                }
+                if (regex.test(b.DESIGNATION.toUpperCase())) {
+                    return 1;
+                }
+                return a.DESIGNATION.localeCompare(b.DESIGNATION);
+            });
+
 
     result_regexp.value = newVal == 0 ? [] : new_result_regexp;
 });
