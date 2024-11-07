@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+
     <style>
         @media print {
             body {
@@ -21,45 +23,76 @@
         }
     </style>
 </head>
-<body>
+<body style=" padding-top: 0em">
 
-    <header class="header" style="box-shadow: 0px 0px 10px #000; border-radius: 10px; padding: 20px; background-color: #fff;">
-        <div class="text-center m-2" style="background-color: #add8e6; padding: 20px; border-radius: 10px;">
+    <header>
+        <section class="mb-1">
+            <div>
+                <div class="row">
+                        <img src="{{ public_path('build/assets/logo.jpg') }}" alt="Image de la Proforma" style="width: 100px; height: 100px; float: left;">
 
-            {{-- resources/views/impression/facturation/proforma.blade.php --}}
+                    <div class="" style="margin-top: -2rem; margin-left: 80px;">
+                        <div class="row" style="color: red;
+                                    font-size: 34px;
+                                    font-family: ui-rounded;
+                                    font-weight: bold;">
+                            <p class="" style="text-align: center;">
+                                <span>SEMEM DISTRIBUTORS</span>
+                                <span style="color: blue">Sarl</span>
+                            </p>
+                        </div>
+                        <div class="row" style="color: blue; text-align: center; font-size: 12px; margin-left: 4rem;">
+                            CAPITAL 200 220 000 F CFA (DEUX CENT MILLIONS DEUX CENT VINGT MILLE FRANCS CFA) <br>
+                            B.P : 5585 Douala-Cameroun Situé Rue Galliéni Akwa <br>
+                            Tél : (237) 233 42 25 24 / 233 43 26 94 Fax : (237) 233 42 85 42 <br>
+                            www.sememdistributors.com E-mail : contact@sememdistributors.com <br>
+                            RC/DLA/1995/B/014998 Statistique N° 8057701 L Contribuable N° M079500007393 / D Régime du Réel
+                        </div>
 
-            {{-- Affichage des détails de la proforma --}}
-            <h1 class="text-center" style="color: #000; font-weight: bold; font-size: 1rem;">Détails de la Proforma</h1>
-            <div class="d-flex justify-content-center gap-1">
-                <label  style="color: #000; font-weight: bold; font-size: 0.8rem; margin-right:30px">N°Proforma : {{ $proforma->numProforma }}</label>
-                <label style="color: #000; font-weight: bold; font-size: 0.8rem; margin-right:30px">DATE : {{ $proforma->date }}</label>
-                <label style="color: #000; font-weight: bold; font-size: 0.8rem;">HEURE : {{ $proforma->heure }}</label>
+                    </div>
+                </div>
             </div>
+        </section>
 
-            <div class="d-flex justify-content-center gap-4">
-                <label style="color: #000; font-weight: bold; font-size: 0.8rem; margin-right:30px">TYPE PROFORMA : {{ $proforma->typeProforma }}</label>
-                <label style="color: #000; font-weight: bold; font-size: 0.8rem; margin-right:30px">TYPE FISCALE : {{ $proforma->typeFiscal }}</label>
-                <label style="color: #000; font-weight: bold; font-size: 0.8rem;">DEPOT : AKWA</label>
-            </div>
+        <hr style="border: 1px solid red;">
+        <hr style="border: 1px solid red;">
 
-            <div class="d-flex justify-content-center gap-4">
-                <label style="color: #000; font-weight: bold; font-size: 0.8rem; margin-right:30px">COMMERCIAL : {{ $proforma->commercial }}</label>
-                <label style="color: #000; font-weight: bold; font-size: 0.8rem; margin-right:30px">VENDEUR : {{ $proforma->vendeur }}</label>
-                <label style="color: #000; font-weight: bold; font-size: 0.8rem;">D.A : {{ $proforma->da }}</label>
-            </div>
-            <div class="d-flex justify-content-center gap-4">
-                <label style="color: #000; font-weight: bold; font-size: 0.8rem; margin-right:30px">CLIENT : {{ $proforma->client }}</label>
-                <label style="color: #000; font-weight: bold; font-size: 0.8rem; margin-right:30px">ACHETEUR : {{ $proforma->acheteur }}</label>
-                <label style="color: #000; font-weight: bold; font-size: 0.8rem;">D.A : {{ $proforma->da }}</label>
-            </div>
+        <section class="header" style="box-shadow: 0px 0px 10px #000; border-radius: 10px; padding: 2px; background-color: #fff;">
+            <div class="text- row  m-2" style="background-color: #add8e6; padding: 20px; border-radius: 10px;">
 
-            {{-- Ajoutez d'autres champs selon votre modèle Proforma --}}
-        </div>
+                {{-- resources/views/impression/facturation/proforma.blade.php --}}
+
+                {{-- Affichage des détails de la proforma --}}
+                <h1 class="text-center" style="color: #000; font-weight: bold; font-size: 1rem;">Détails de la Proforma</h1>
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                        <td style="color: #000; font-weight: bold; font-size: 0.8rem;">N°Proforma : {{ $proforma->numProforma }}</td>
+                        <td style="color: #000; font-weight: bold; font-size: 0.8rem;">DATE : {{ $proforma->date }}</td>
+                        <td style="color: #000; font-weight: bold; font-size: 0.8rem;">COMMERCIAL : {{ $proforma->commercial }}</td>
+                    </tr>
+                    <tr>
+                        <td style="color: #000; font-weight: bold; font-size: 0.8rem;">TYPE PROFORMA : {{ $proforma->typeProforma }}</td>
+                        <td style="color: #000; font-weight: bold; font-size: 0.8rem;">TYPE FISCALE : {{ $proforma->typeFiscal }}</td>
+                        <td style="color: #000; font-weight: bold; font-size: 0.8rem;">D.A : {{ $proforma->da }}</td>
+                    </tr>
+                    <tr>
+                        <td style="color: #000; font-weight: bold; font-size: 0.8rem;">CLIENT : {{ $proforma->client }}</td>
+                        <td style="color: #000; font-weight: bold; font-size: 0.8rem;">ACHETEUR : {{ $proforma->acheteur }}</td>
+                        <td style="color: #000; font-weight: bold; font-size: 0.8rem;">VENDEUR : {{ $proforma->vendeur }}</td>
+                    </tr>
+                </table>
+
+                {{-- Ajoutez d'autres champs selon votre modèle Proforma --}}
+            </div>
+        </section>
     </header>
+
+
+
 
     {{-- Affichage des articles de la proforma dans un tableau --}}
     <div class="text-center m-2">
-        <table class="table text-center mx-auto" style="border: 1px solid #000; margin: 5px;">
+        <table class="table text-center mx-auto" style="border: 1px solid #000; margin: 5px; border-collapse: collapse;">
             <thead>
                 <tr>
                     <th style="border: 1px solid #000;">DESIGNATION</th>
@@ -95,19 +128,21 @@
                 $totalTVA = $totalHT * ($tva / 100);
                 $totalTTC = $totalHT + $totalTVA;
             @endphp
-            <div class="d-flex justify-content-center">
-                <label class="m-3" style="color: #34C759; font-size: 1em; font-weight: bold; margin-right:30px">Total HT : {{ $totalHT }} €</label>
-                <label class="m-3" style="color: #8BC34A; font-size: 1em; font-weight: bold; margin-right:30px">|</label>
+            <div class=" justify-content-center">
+                <label class="m-3" style="color: #34C759; font-size: 1em; font-weight: bold;">Total HT : {{ $totalHT }} €</label>
+                <label class="m-3" style="color: #8BC34A; font-size: 1em; font-weight: bold;">|</label>
                 <label class="m-3" style="color: #3E8E41; font-size: 1rem; font-weight: bold;">TVA ({{ $tva }}%) : {{ $totalTVA }} €</label>
                 <br>
-                <label class="m-3" style="color: #228B22; font-size: 1rem; font-weight: bold; margin-right:30px">Total TTC : {{ $totalTTC }} €</label>
-                <label class="m-3" style="color: #008000; font-size: 1rem; font-weight: bold; margin-right:30px">|</label>
+                <label class="m-3" style="color: #228B22; font-size: 1rem; font-weight: bold;">Total TTC : {{ $totalTTC }} €</label>
+                <label class="m-3" style="color: #008000; font-size: 1rem; font-weight: bold;">|</label>
                 <label class="m-3" style="color: #006400; font-size: 1rem; font-weight: bold;">Precompte : {{ $proforma->precompte }}</label>
             </div>
 
 
         </div>
     </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
 </body>
 </html>
