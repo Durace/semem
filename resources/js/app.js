@@ -3,9 +3,9 @@ import './bootstrap';
 import './Pages/assets/assets/libs/flot/css/float-chart.css'
 import './Pages/assets/dist/css/style.min.css'
 
-import $ from 'jquery';
-$.noConflict();
-window.jQuery = $;
+// import $ from 'jquery';
+// $.noConflict();
+// window.jQuery = $;
 
 import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'

@@ -26,16 +26,16 @@
                                                 aria-describedby="emailHelp" placeholder="RECHERCHER UN NUMERO DE PROFORMA">
                                             <div class="search">
                                                 <div v-for="result_regex_proforma in result_regexp_proforma" :key="result_regex_proforma.id"
-                                                    class="container-designation-search" @click="selectNumProforma(result_regex_proforma)">
-                                                        <Link class="btn" :href="'/' + result_regex_proforma.numProforma">
-                                                            <b>{{ result_regex_proforma.numProforma }}</b>
-                                                            <span class="ms-2">
-                                                                (Date: {{ result_regex_proforma.date }})
-                                                            </span>
-                                                            <span class="ms-2">
-                                                                (Heure: {{ result_regex_proforma.heure }})
-                                                            </span>
-                                                        </Link>
+                                                    class="container-designation-search" @click="(event) => selectNumProforma(result_regex_proforma, event)">
+                                                    <button class="btn" data-bs-dismiss="modal">
+                                                        <b>{{ result_regex_proforma.numProforma }}</b>
+                                                        <span class="ms-2">
+                                                            (Date: {{ result_regex_proforma.date }})
+                                                        </span>
+                                                        <span class="ms-2">
+                                                            (Heure: {{ result_regex_proforma.heure }})
+                                                        </span>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -303,13 +303,13 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted } from 'vue';
+import { ref, reactive, computed, watch, onMounted } from 'vue';
 import { Link, useForm } from '@inertiajs/vue3';
+import { Inertia } from '@inertiajs/inertia';
 import axios from 'axios';
 
 
 // recuperetion des valeur du controller
-// Récupération des valeurs du contrôleur
 const props = defineProps({
   proformas: Array,
   stockLists: Object,
@@ -317,7 +317,14 @@ const props = defineProps({
   numProforma: String
 });
 // Affichage dans la console
-console.log('Proformas reçues du contrôleur:', props.articlesProforma);
+console.log('Proformas reçues du ccccontrôleur:', props.articlesProforma);
+
+const state = reactive({
+    selectedProforma: null,
+    articles: [],
+    stockLists: props.stockLists,
+    proformas: props.proformas
+});
 ///////////////////////////////////////////
 
 
@@ -455,29 +462,61 @@ const form = useForm({
             });
         ////////////////////////////////////
 
-        //affichage de donnée selon resultat recherche selectNumProforma
-        const selectNumProforma = (proforma) => {
-            // // Récupérer les données de la proforma où le numéro correspond
-            // const proformaData = props.proformas.find(p => p.numProforma === proforma.numProforma);
 
-            // // Mettre les valeurs de la proforma dans les variables de la proforma
-            // if (proformaData) {
-            //     numProforma.value = proformaData.numProforma;
-            //     date.value = proformaData.date;
-            //     heure.value = proformaData.heure;
-            //     precompte.value = proformaData.precompte;
-            //     client.value = proformaData.client;
 
-            // }
+        //recherche proforma
+        const selectNumProforma = async (proforma, event) => {
+            event.preventDefault();
+            event.stopPropagation();
 
-            console.log("Numéro de proforma sélectionné:", proforma.numProforma);
+            try {
+                // Effectuer la requête GET avec numProforma
+                const response = await axios.get(`/proforma/${proforma.numProforma}`);
+                console.log("Récupération réussie", response.data);
 
-            // Fermer le modal après la sélection de la proforma
-            const modal = document.getElementById('Rechercherproforma');
-            const modalInstance = bootstrap.Modal.getInstance(modal);
-            modalInstance.hide();
-            };
-        //////////////////////////////////////////
+                // Mettre à jour l'état du composant avec les nouvelles données
+                state.articles = response.data.articlesProforma;
+                state.selectedProforma = proforma.numProforma;  // Mettre à jour le numéro de la proforma sélectionnée
+                state.stockLists = response.data.stockLists;  // Mettre à jour la liste des stocks
+                state.proformas = response.data.proformas;  // Mettre à jour la liste des proformas
+
+                // Mettre à jour les variables réactives (ref) avec les nouvelles données
+                const proformaData = response.data.proformas.find(p => p.numProforma === proforma.numProforma);
+
+                // Mettre à jour les ref avec les nouvelles données de la proforma sélectionnée
+                date.value = proformaData?.date || now.toISOString().split('T')[0];
+                heure.value = proformaData?.heure || now.toTimeString().split(' ')[0];
+
+                typeProforma.value = proformaData?.typeProforma || 'Choisir...';
+                typeFiscal.value = proformaData?.typeFiscal || 'Choisir...';
+                client.value = proformaData?.client || 'Choisir...';
+                acheteur.value = proformaData?.acheteur || '';
+                commercial.value = proformaData?.commercial || 'Choisir...';
+                vendeur.value = proformaData?.vendeur || 'Choisir...';
+                da.value = proformaData?.da || '';
+
+                // Mettre à jour numProforma si nécessaire
+                numProforma.value = `${date.value.replace(/-/g, '')}${heure.value.replace(/:/g, '')}`;
+
+                // Mettre à jour la liste des articles sélectionnés
+                articlesSelectionnes.value = response.data.articlesProforma.map(article => ({
+                    DESIGNATION: article.designation,
+                    PU: article.pu,
+                    QTE: article.qte,
+                    REMISE: article.remise,
+                    UV: article.uv,
+                    get PT() {
+                        return (this.PU * this.QTE) * (100 - this.REMISE) / 100;
+                    }
+                }));
+
+            } catch (error) {
+                console.error("Erreur lors de la récupération des données:", error);
+            }
+        };
+        /////////////////
+
+
 
     const montantNetHT = computed(() => {
         return articlesSelectionnes.value.reduce((total, article) => total + article.PT, 0);

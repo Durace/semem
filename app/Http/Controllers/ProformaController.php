@@ -112,32 +112,29 @@ class ProformaController extends Controller
         return response()->json(['message' => 'Données enregistrées avec succès'], 200);
     }
 
-    public function rechercheProforma(Request $request){
-        // Exemple de traitement pour récupérer les données de la proforma
+    public function rechercheProforma(Request $request)
+{
+    // Exemple de traitement pour récupérer les données de la proforma
 
-        $stockList = Stock::orderBy("DESIGNATION", "ASC")->paginate(9246);
+    $stockList = Stock::orderBy("DESIGNATION", "ASC")->paginate(9246);
 
-        Log::info('Début de la méthode enregistrer');
+    Log::info('Début de la méthode rechercheProforma');
 
-        // echo $request->numProforma;
+    $numProforma = $request->numProforma;
 
+    $articlesProforma = ProformaArticle::where('codeProforma', $numProforma)->get();
 
-        $numProforma = $request->numProforma;
+    $proformas = Proforma::all();
 
+    // Retourner les données en JSON pour la mise à jour dynamique
+    return response()->json([
+        "stockLists" => $stockList,
+        "articlesProforma" => $articlesProforma,
+        "numProforma" => $numProforma,
+        'proformas' => $proformas,
+    ]);
+}
 
-
-        $articlesProforma = ProformaArticle::where('codeProforma', $numProforma)->get();
-
-        $proformas = Proforma::all();
-
-        return inertia("facturation/proforma", [
-            "stockLists" => $stockList,
-            "articlesProforma" => $articlesProforma,
-            "numProforma" => $numProforma,
-            'proformas' => $proformas,
-        ]);
-
-    }
 
 
     public function destroy($numProforma)

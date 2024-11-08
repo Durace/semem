@@ -15,16 +15,12 @@ Route::get('/', function () {
 Route::get('/facturation-proformat', [ProformaController::class,'index'])->name('');
 Route::post('/facturation-proformat', [ProformaController::class, 'creer'])->name('facturation.proforma.creer');
 Route::post('/enregistrer', [ProformaController::class, 'enregistrer'])->name('enregistrer');
-Route::get('/{numProforma}', [ProformaController::class, 'rechercheProforma'])->name('rechercheProforma');
+Route::get('/proforma/{numProforma}', [ProformaController::class, 'rechercheProforma'])->name('rechercheProforma');
 
 
 // routes/web.php
 
 Route::delete('/supprimer/{numProforma}', [ProformaController::class, 'destroy']);
-
-
-
-
 
 
 Route::get('/facturation-stock', [StockController::class,'index'])->name('facturation.stock');
