@@ -23,15 +23,17 @@
         }
     </style>
 </head>
-<body style=" padding-top: 0em">
+<body>
+{{-- <body style="padding: 0rem 0rem;"> --}}
 
     <header>
         <section class="mb-1">
             <div>
                 <div class="row">
-                        <img src="{{ public_path('build/assets/logo.jpg') }}" alt="Image de la Proforma" style="width: 100px; height: 100px; float: left;">
+                        <img src="{{ public_path('build/assets/logo.jpg') }}" alt="Image de la Proforma" style="width: 150px; height: 115px; float: left;">
+                        {{-- <img src="{{ asset('build/assets/logo.jpg') }}" alt="Image de la Proforma" style="width: 200px; height: 160px; float: left;"> --}}
 
-                    <div class="" style="margin-top: -2rem; margin-left: 80px;">
+                    <div class="" style="margin-top: -2rem; margin-left: 0px;">
                         <div class="row" style="color: red;
                                     font-size: 34px;
                                     font-family: ui-rounded;
@@ -41,7 +43,7 @@
                                 <span style="color: blue">Sarl</span>
                             </p>
                         </div>
-                        <div class="row" style="color: blue; text-align: center; font-size: 12px; margin-left: 4rem;">
+                        <div class="row" style="color: blue; text-align: center; font-size: 12px; margin-left: 0rem; margin-top: -2rem">
                             CAPITAL 200 220 000 F CFA (DEUX CENT MILLIONS DEUX CENT VINGT MILLE FRANCS CFA) <br>
                             B.P : 5585 Douala-Cameroun Situé Rue Galliéni Akwa <br>
                             Tél : (237) 233 42 25 24 / 233 43 26 94 Fax : (237) 233 42 85 42 <br>
@@ -54,8 +56,8 @@
             </div>
         </section>
 
-        <hr style="border: 1px solid red;">
-        <hr style="border: 1px solid red;">
+        <hr style="border: 0.5px solid red;">
+        <hr style="border: 0.5px solid red;">
 
         <section class="header" style="box-shadow: 0px 0px 10px #000; border-radius: 10px; padding: 2px; background-color: #fff;">
             <div class="text- row  m-2" style="background-color: #add8e6; padding: 20px; border-radius: 10px;">
@@ -72,7 +74,6 @@
                     </tr>
                     <tr>
                         <td style="color: #000; font-weight: bold; font-size: 0.8rem;">TYPE PROFORMA : {{ $proforma->typeProforma }}</td>
-                        <td style="color: #000; font-weight: bold; font-size: 0.8rem;">TYPE FISCALE : {{ $proforma->typeFiscal }}</td>
                         <td style="color: #000; font-weight: bold; font-size: 0.8rem;">D.A : {{ $proforma->da }}</td>
                     </tr>
                     <tr>

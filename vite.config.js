@@ -23,4 +23,12 @@ export default defineConfig({
             '$': 'jquery',
         },
     },
+	
+	/*
+	server: {
+        host: '192.168.137.1', // Adresse IP de votre ordinateur
+        port: 5173,            // Le port que Vite utilise
+        strictPort: true,      // Assure que Vite utilise exactement ce port
+    }
+	*/
 });

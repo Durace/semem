@@ -155,16 +155,6 @@
                         </select>
                     </div>
                     <div class="col-md-6">
-                        <label for="typeFiscal" class="form-label">Type fiscal</label>
-                        <select id="typeFiscal" class="form-select" v-model="typeFiscal">
-                            <option selected>NORMAL</option>
-                            <option selected>DIRECT</option>
-                            <option selected>EXONERE</option>
-                            <option selected>TVA+PRECPT</option>
-                            <!-- Ajouter les options ici -->
-                        </select>
-                    </div>
-                    <div class="col-md-6">
                         <label for="client" class="form-label">Client</label>
                         <select id="client" class="form-select" v-model="client">
                             <option selected>Choisir...</option>
@@ -178,23 +168,7 @@
                     <div class="col-md-4">
                         <label for="commercial" class="form-label">Commercial</label>
                         <select id="commercial" class="form-select" v-model="commercial">
-                            <option selected>COMPTOIR</option>
-                            <option selected>EDOUARD G.</option>
-                            <option selected>EMMANUEL PAUL DIDIER</option>
-                            <option selected>FOKO DANIEL</option>
-                            <option selected>KAMENI</option>
-                            <option selected>MAMBOU JOSEPH</option>
-                            <option selected>MUO JOEL</option>
-                            <option selected>MANKO DONALD</option>
-                            <option selected>PERSONEL SEMEM</option>
-                            <option selected>TAYOU RIGOBERT</option>
-                            <option selected>TCHAMADOU MARCIAL</option>
-                            <option selected>VTE INTERNATIONALE</option>
-                            <option selected>VENTE INTERNE</option>
-                            <option selected>WAFO</option>
-                            <option selected>WANDA FRANCIS</option>
-                            <option selected>YAMANGA DUPLEX</option>
-                            <option selected>YOGHO</option>
+                            <option selected> {{ user.name }}</option>
                             <!-- Ajouter les options ici -->
                         </select>
                     </div>
@@ -203,12 +177,8 @@
                         <select id="vendeur" class="form-select" v-model="vendeur">
                             <option selected>WANDA FRANCIS</option>
                             <option selected>GERVAIS</option>
-                            <option selected>HERVE</option>
                             <option selected>KAMENI</option>
-                            <option selected>LINE</option>
                             <option selected>MARCEL</option>
-                            <option selected>ROMEO</option>
-                            <option selected>STEPHANIE</option>
                             <!-- Ajouter les options ici -->
                         </select>
                     </div>
@@ -310,12 +280,16 @@ import axios from 'axios';
 
 
 // recuperetion des valeur du controller
-const props = defineProps({
-  proformas: Array,
-  stockLists: Object,
-  articlesProforma: Array,
-  numProforma: String
-});
+    const props = defineProps({
+        proformas: Array,
+        stockLists: Object,
+        articlesProforma: Array,
+        numProforma: String,
+        sessionData: Object,
+        user: Object
+    });
+
+
 // Affichage dans la console
 console.log('Proformas reçues du ccccontrôleur:', props.articlesProforma);
 
@@ -339,7 +313,6 @@ const numProforma = computed(() => {
 });
 
 const typeProforma = ref(props.proformas.find(proforma => proforma.numProforma === props.numProforma)?.typeProforma || 'Choisir...');
-const typeFiscal = ref(props.proformas.find(proforma => proforma.numProforma === props.numProforma)?.typeFiscal || 'Choisir...');
 const client = ref(props.proformas.find(proforma => proforma.numProforma === props.numProforma)?.client || 'Choisir...');
 const acheteur = ref(props.proformas.find(proforma => proforma.numProforma === props.numProforma)?.acheteur || '');
 const commercial = ref(props.proformas.find(proforma => proforma.numProforma === props.numProforma)?.commercial || 'Choisir...');
@@ -353,7 +326,6 @@ const form = useForm({
     date: '',
     heure: '',
     typeProforma: '',
-    typeFiscal: '',
     client: '',
     acheteur: '',
     commercial: '',
@@ -370,7 +342,6 @@ const form = useForm({
             form.date = date.value;
             form.heure = heure.value;
             form.typeProforma = typeProforma.value;
-            form.typeFiscal = typeFiscal.value;
             form.client = client.value;
             form.acheteur = acheteur.value;
             form.commercial = commercial.value;
@@ -383,9 +354,25 @@ const form = useForm({
             form.post('/facturation-proformat', {
                 preserveState: true,
                 preserveScroll: true,
+
                 onSuccess: (page) => {
-                    console.log(page.props.message);
+                    // console.log(page.props.message); // Affiche le message dans la console
+                    Swal.fire({
+                        title: "Validé!",
+                        Toast: true,
+                        icon: "success",
+                        text: "Entête proforma enregistré.",
+                        // imageUrl: "https://unsplash.it/400/200",
+                        imageWidth: 100,
+                        imageHeight: 100,
+                        imageAlt: "Custom image",
+                        Animation: false,
+                        position: "top-end",
+                        showConfirmation: false,
+                        timer: 4000,
+                    });
                 },
+
             });
         };
 
@@ -488,7 +475,6 @@ const form = useForm({
                 heure.value = proformaData?.heure || now.toTimeString().split(' ')[0];
 
                 typeProforma.value = proformaData?.typeProforma || 'Choisir...';
-                typeFiscal.value = proformaData?.typeFiscal || 'Choisir...';
                 client.value = proformaData?.client || 'Choisir...';
                 acheteur.value = proformaData?.acheteur || '';
                 commercial.value = proformaData?.commercial || 'Choisir...';
@@ -540,10 +526,10 @@ const form = useForm({
                 // Logique pour sélectionner l'article
                 console.log("Article sélectionné:", article);
 
-                // Fermer le modal
-                    const modal = document.getElementById('staticBackdrop');
-                    const modalInstance = bootstrap.Modal.getInstance(modal);
-                    modalInstance.hide();
+                // // Fermer le modal
+                //     const modal = document.getElementById('staticBackdrop');
+                //     const modalInstance = bootstrap.Modal.getInstance(modal);
+                //     modalInstance.hide();
 
                 // Ajouter l'article sélectionné au tableau
                     const nouvelArticle = {
@@ -611,12 +597,27 @@ const form = useForm({
                 // Envoi des données à la route
                 axios.post('/enregistrer', donnees)
                     .then(response => {
-                        console.log('Données enregistrées avec succès:', response.data);
+                        // console.log('Données enregistrées avec succès:', response.data);
                         // Ajoutez ici le code pour gérer la réponse (par exemple, afficher un message de succès)
+                        Swal.fire({
+                        title: "Enregistré!",
+                        toast: true,
+                        icon: "success",
+                        text: "Proforma enregistré.",
+                        // imageUrl: "https://unsplash.it/400/200",
+                        imageWidth: 100,
+                        imageHeight: 100,
+                        imageAlt: "Custom image",
+                        // Animation: false,
+                        position: "top-end",
+                        // showConfirmation: false,
+                        timer: 4000,
+                    });
                     })
                     .catch(error => {
                         console.error('Erreur lors de l\'enregistrement des données:', error);
                         // Ajoutez ici le code pour gérer l'erreur (par exemple, afficher un message d'erreur)
+
                     });
 
                 // console.log("yeyeeyfffff"+numProforma.value);
@@ -630,7 +631,6 @@ const form = useForm({
         // Fonction pour réinitialiser toutes les variables
             const nouveau = () => {
                 typeProforma.value = 'Choisir...';
-                typeFiscal.value = 'Choisir...';
                 client.value = 'Choisir...';
                 acheteur.value = '';
                 commercial.value = 'Choisir...';

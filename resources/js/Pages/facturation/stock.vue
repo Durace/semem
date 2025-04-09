@@ -36,15 +36,18 @@
                         <div class="search">
                             <div v-for="result_regex in result_regexp" :key="result_regex.id"
                                 class="container-designation-search">
-                                <Link :href="`/ajout-article-${result_regex.CODE}`">
+                                <span>
+                                <!-- <Link :href="`/ajout-article-${result_regex.CODE}`"> -->
                                 <b>{{ result_regex.DESIGNATION }}</b>
-                                <span class="ms-2">
-                                    (Principal: {{ result_regex.QTE_STOCK }},
-                                    Dépôt 1: {{ result_regex.stock1 ? result_regex.stock1.QTE_STOCK : 'N/A' }},
+                                <span class="ms-2 btn"
+                                    :class="result_regex.QTE_STOCK < 1 ? 'btn-danger' : 'btn-primary'">
+                                    {{ result_regex.QTE_STOCK }}
+                                    <!-- Dépôt 1: {{ result_regex.stock1 ? result_regex.stock1.QTE_STOCK : 'N/A' }},
                                     Dépôt 2: {{ result_regex.stock2 ? result_regex.stock2.QTE_STOCK : 'N/A' }},
-                                    Dépôt 3: {{ result_regex.stock3 ? result_regex.stock3.QTE_STOCK : 'N/A' }})
+                                    Dépôt 3: {{ result_regex.stock3 ? result_regex.stock3.QTE_STOCK : 'N/A' }} -->
+
                                 </span>
-                                </Link>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -56,10 +59,10 @@
                         <tr>
                             <th>Nom</th>
                             <th>Code</th>
-                            <th>Dépôt principal</th>
-                            <th>Dépôt 1</th>
+                            <th>Dépôt</th>
+                            <!-- <th>Dépôt 1</th>
                             <th>Dépôt 2</th>
-                            <th>Dépôt 3</th>
+                            <th>Dépôt 3</th> -->
                         </tr>
                     </thead>
                     <tbody>
@@ -72,13 +75,24 @@
                                 </div>
                             </td>
                             <td>{{ stockList.CODE }}</td>
-                            <td>{{ stockList.DEPOT }} {{ stockList.QTE_STOCK }}</td>
-                            <td>{{ stockList.stock1 ? stockList.stock1.DEPOT : 'N/A' }}
-                                {{ stockList.stock1 ? stockList.stock1.QTE_STOCK : 'N/A' }}</td>
-                            <td>{{ stockList.stock2 ? stockList.stock2.DEPOT : 'N/A' }}
-                                {{ stockList.stock2 ? stockList.stock2.QTE_STOCK : 'N/A' }}</td>
-                            <td>{{ stockList.stock3 ? stockList.stock3.DEPOT : 'N/A' }}
-                                {{ stockList.stock3 ? stockList.stock3.QTE_STOCK : 'N/A' }}</td>
+                            <td>{{ stockList.DEPOT }}
+                                <span class="ms-2 btn"
+                                    :class="stockList.QTE_STOCK < 1 ? 'btn-danger' : 'btn-primary'">
+                                    {{ stockList.QTE_STOCK }}
+                                </span>
+                            </td>
+
+                            <!-- <td>{{ stockList ? stockList.DEPOT : 'N/A' }}
+                                {{ stockList ? stockList.QTE_STOCK : 'N/A' }}
+                            </td> -->
+
+                            <!-- <td>{{ stockList ? stockList.DEPOT : 'N/A' }}
+                                {{ stockList ? stockList.QTE_STOCK : 'N/A' }}
+                            </td>
+
+                            <td>{{ stockList ? stockList.DEPOT : 'N/A' }}
+                                {{ stockList ? stockList.QTE_STOCK : 'N/A' }}
+                            </td> -->
                         </tr>
                     </tbody>
                     <tfoot>

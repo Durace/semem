@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
+
 use App\Models\Proforma;
 use App\Models\Stock;
 use App\Models\ProformaArticle;
@@ -14,19 +17,12 @@ class ProformaController extends Controller
 {
     //
     public function index(){
-
+        // dd(Session::all());
+        // dd(Auth::user());
         $proformas = Proforma::all();
 
         $stockList = Stock::orderBy("DESIGNATION", "ASC")->paginate(9246);
-        // $stockList = Stock::orderBy("DESIGNATION", "ASC")->paginate(9246);
-        // $stockList = Stock::orderBy("DESIGNATION", "ASC")->paginate(2000);
 
-        // Récupérer les données des autres tables
-        // foreach ($stockList as $stock) {
-        //     $stock->stock1 = Stock::where('CODE', $stock->CODE)->first();
-        //     $stock->stock2 = Stock::where('CODE', $stock->CODE)->first();
-        //     $stock->stock3 = Stock::where('CODE', $stock->CODE)->first();
-        // }
 
         // Récupérer la dernière valeur de numProforma dans la table Proforma
         $dernierProforma = Proforma::orderBy('created_at', 'desc')->first();
@@ -39,6 +35,8 @@ class ProformaController extends Controller
             'proformas' => $proformas,
             "stockLists" => $stockList,
             "articlesProforma" => $articlesProforma,
+            'sessionData' => Session::all(), // Passe toutes les données de la session
+            'user' => Auth::user() // passe les données de l'utilisateur
         ]);
     }
 
@@ -51,7 +49,6 @@ class ProformaController extends Controller
                 'date' => $request->date,
                 'heure' => $request->heure,
                 'typeProforma' => $request->typeProforma,
-                'typeFiscal' => $request->typeFiscal,
                 'client' => $request->client,
                 'acheteur' => $request->acheteur,
                 'commercial' => $request->commercial,
@@ -60,9 +57,9 @@ class ProformaController extends Controller
             ]
         );
 
-
         // Afficher la vue avec un message de succès
         return inertia("facturation/proforma")->with('message', 'Proforma créé avec succès');
+
     }
 
     public function enregistrer(Request $request){
@@ -116,7 +113,7 @@ class ProformaController extends Controller
 {
     // Exemple de traitement pour récupérer les données de la proforma
 
-    $stockList = Stock::orderBy("DESIGNATION", "ASC")->paginate(9246);
+    // $stockList = Stock::orderBy("DESIGNATION", "ASC")->paginate(9246);
 
     Log::info('Début de la méthode rechercheProforma');
 
@@ -128,7 +125,7 @@ class ProformaController extends Controller
 
     // Retourner les données en JSON pour la mise à jour dynamique
     return response()->json([
-        "stockLists" => $stockList,
+        // "stockLists" => $stockList,
         "articlesProforma" => $articlesProforma,
         "numProforma" => $numProforma,
         'proformas' => $proformas,

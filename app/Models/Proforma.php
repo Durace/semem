@@ -14,7 +14,6 @@ class Proforma extends Model
         'date',
         'heure',
         'typeProforma',
-        'typeFiscal',
         'client',
         'acheteur',
         'commercial',

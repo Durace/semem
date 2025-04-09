@@ -17,7 +17,6 @@ return new class extends Migration
             $table->date('date');
             $table->time('heure');
             $table->string('typeProforma', 191);
-            $table->string('typeFiscal', 191);
             $table->string('client', 191);
             $table->string('acheteur', 191)->nullable();
             $table->string('commercial', 191);

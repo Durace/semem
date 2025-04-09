@@ -5,6 +5,10 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
 
+import Swal from 'sweetalert2';
+window.Swal = Swal;
+
+
 import './Pages/assets/assets/libs/jquery/dist/jquery.min'
 
 import './Pages/assets/assets/libs/bootstrap/dist/js/bootstrap.bundle.min'
