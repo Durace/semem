@@ -134,20 +134,20 @@
 
                 <form class="row g-3 my-3" style="background-color: #e0f7ff;">
                     <div class="col-md-4">
-                        <label for="numProforma" class="form-label">N° de proforma</label>
+                        <label for="numProforma" class="form-label majuscule">N° de proforma</label>
                         <input type="text" class="form-control" id="numProforma" v-model="numProforma" readonly>
                     </div>
                     <div class="col-md-4">
-                        <label for="date" class="form-label">Date</label>
+                        <label for="date" class="form-label majuscule">Date</label>
                         <input type="date" class="form-control" id="date" v-model="date">
                     </div>
                     <div class="col-md-4">
-                        <label for="heure" class="form-label">Heure</label>
+                        <label for="heure" class="form-label majuscule">Heure</label>
                         <input type="time" class="form-control" id="heure" v-model="heure">
                     </div>
                     <div class="col-md-6">
-                        <label for="typeProforma" class="form-label">Type proforma</label>
-                        <select id="typeProforma" class="form-select" v-model="typeProforma">
+                        <label for="typeProforma" class="form-label majuscule">Type proforma</label>
+                        <select id="typeProforma" class="form-select majuscule" v-model="typeProforma">
                             <option selected>Choisir...</option>
                             <option selected>SOCIETE</option>
                             <option selected>COMPTANT</option>
@@ -155,37 +155,36 @@
                         </select>
                     </div>
                     <div class="col-md-6">
-                        <label for="client" class="form-label">Client</label>
-                        <select id="client" class="form-select" v-model="client">
+                        <label for="client" class="form-label majuscule">Client</label>
+                        <select id="client" class="form-select majuscule" v-model="client">
                             <option selected>Choisir...</option>
                             <!-- Ajouter les options ici -->
                         </select>
                     </div>
                     <div class="col-md-6">
-                        <label for="acheteur" class="form-label">Acheteur</label>
-                        <input type="text" class="form-control" id="acheteur" v-model="acheteur">
+                        <label for="acheteur" class="form-label majuscule">Acheteur</label>
+                        <input type="text" class="form-control majuscule" id="acheteur" v-model="acheteur">
                     </div>
                     <div class="col-md-4">
-                        <label for="commercial" class="form-label">Commercial</label>
-                        <select id="commercial" class="form-select" v-model="commercial">
+                        <label for="commercial" class="form-label majuscule">Commercial</label>
+                        <input type="text" class="form-control majuscule" id="commercial" v-model="commercial" readonly>
+                        <!-- <select id="commercial" class="form-select" value="{{ user.name }}" v-model="commercial">
                             <option selected> {{ user.name }}</option>
-                            <!-- Ajouter les options ici -->
-                        </select>
+                        </select> -->
                     </div>
-                    <div class="col-md-4">
+                    <!-- <div class="col-md-4">
                         <label for="vendeur" class="form-label">Vendeur</label>
                         <select id="vendeur" class="form-select" v-model="vendeur">
                             <option selected>WANDA FRANCIS</option>
                             <option selected>GERVAIS</option>
                             <option selected>KAMENI</option>
                             <option selected>MARCEL</option>
-                            <!-- Ajouter les options ici -->
                         </select>
                     </div>
                     <div class="col-md-4">
                         <label for="da" class="form-label">DA</label>
                         <input type="text" class="form-control" id="da" v-model="da">
-                    </div>
+                    </div> -->
                 </form>
 
 
@@ -291,7 +290,7 @@ import axios from 'axios';
 
 
 // Affichage dans la console
-console.log('Proformas reçues du ccccontrôleur:', props.articlesProforma);
+// console.log('Proformas reçues du ccccontrôleur:', props.articlesProforma);
 
 const state = reactive({
     selectedProforma: null,
@@ -306,16 +305,20 @@ const now = new Date();
 const date = ref(props.proformas.find(proforma => proforma.numProforma === props.numProforma)?.date || now.toISOString().split('T')[0]);
 const heure = ref(props.proformas.find(proforma => proforma.numProforma === props.numProforma)?.heure || now.toTimeString().split(' ')[0]);
 
-const numProforma = computed(() => {
-    const cleanDate = date.value.replace(/-/g, '');
-    const cleanTime = heure.value.replace(/:/g, '');
-    return cleanDate + cleanTime;
-});
+// const numProforma = computed(() => {
+//     const cleanDate = date.value.replace(/-/g, '');
+//     const cleanTime = heure.value.replace(/:/g, '');
+//     return cleanDate + cleanTime;
+// });
+
+const numProforma = ref(props.numProforma || '');
+
+
 
 const typeProforma = ref(props.proformas.find(proforma => proforma.numProforma === props.numProforma)?.typeProforma || 'Choisir...');
 const client = ref(props.proformas.find(proforma => proforma.numProforma === props.numProforma)?.client || 'Choisir...');
 const acheteur = ref(props.proformas.find(proforma => proforma.numProforma === props.numProforma)?.acheteur || '');
-const commercial = ref(props.proformas.find(proforma => proforma.numProforma === props.numProforma)?.commercial || 'Choisir...');
+const commercial = ref(props.user.name);
 const vendeur = ref(props.proformas.find(proforma => proforma.numProforma === props.numProforma)?.vendeur || 'Choisir...');
 const da = ref(props.proformas.find(proforma => proforma.numProforma === props.numProforma)?.da || '');
 
@@ -348,7 +351,7 @@ const form = useForm({
             form.vendeur = vendeur.value;
             form.da = da.value;
 
-            console.log( form.date);
+            // console.log( form.date);
 
 
             form.post('/facturation-proformat', {
@@ -459,7 +462,7 @@ const form = useForm({
             try {
                 // Effectuer la requête GET avec numProforma
                 const response = await axios.get(`/proforma/${proforma.numProforma}`);
-                console.log("Récupération réussie", response.data);
+                // console.log("Récupération réussie", response.data);
 
                 // Mettre à jour l'état du composant avec les nouvelles données
                 state.articles = response.data.articlesProforma;
@@ -524,7 +527,7 @@ const form = useForm({
         //seclectionne un article de la recherche
             const selectArticle = (article) => {
                 // Logique pour sélectionner l'article
-                console.log("Article sélectionné:", article);
+                // console.log("Article sélectionné:", article);
 
                 // // Fermer le modal
                 //     const modal = document.getElementById('staticBackdrop');
@@ -550,7 +553,7 @@ const form = useForm({
                 searchDesignation.value = '';
 
                 // Afficher le tableau mis à jour dans la console
-                console.log("Articles sélectionnés:", articlesSelectionnes.value);
+                // console.log("Articles sélectionnés:", articlesSelectionnes.value);
 
                 // Création des variables dynamiques avec les formules de calcul
                 const montantNetHT = computed(() => {
@@ -570,10 +573,10 @@ const form = useForm({
 
                 // Affichage des valeurs calculées dans la console pour vérification
                     watch([montantNetHT, montantTVA, montantNetTTC, precompte], () => {
-                        console.log("Montant net HT:", montantNetHT.value);
-                        console.log("TVA (19.25%):", montantTVA.value);
-                        console.log("Montant net TTC:", montantNetTTC.value);
-                        console.log("Précompte:", precompte.value);
+                        // console.log("Montant net HT:", montantNetHT.value);
+                        // console.log("TVA (19.25%):", montantTVA.value);
+                        // console.log("Montant net TTC:", montantNetTTC.value);
+                        // console.log("Précompte:", precompte.value);
                     });
             };
         //////////////////////////////
@@ -629,6 +632,13 @@ const form = useForm({
         ///////////////////
 
         // Fonction pour réinitialiser toutes les variables
+
+        const generateNumProforma = () => {
+            const cleanDate = date.value.replace(/-/g, '');
+            const cleanTime = heure.value.replace(/:/g, '');
+            return cleanDate + cleanTime;
+        };
+
             const nouveau = () => {
                 typeProforma.value = 'Choisir...';
                 client.value = 'Choisir...';
@@ -639,11 +649,18 @@ const form = useForm({
                 articlesSelectionnes.value = [];
                 searchDesignation.value = '';
                 precompte.value = 0;
-                setInterval(() => {
-                    const now = new Date();
-                    date.value = now.toISOString().split('T')[0];
-                    heure.value = now.toTimeString().split(' ')[0];
-                }, 1000);
+
+                const now = new Date();
+                date.value = now.toISOString().split('T')[0];
+                heure.value = now.toTimeString().split(' ')[0];
+
+
+                numProforma.value = generateNumProforma();
+                // setInterval(() => {
+                //     const now = new Date();
+                //     date.value = now.toISOString().split('T')[0];
+                //     heure.value = now.toTimeString().split(' ')[0];
+                // }, 1000);
             };
         // /////////////////
 
@@ -658,7 +675,7 @@ const form = useForm({
             const supprimerProforma = (numProforma) => {
                 axios.delete(`/supprimer/${numProforma}`)
                     .then(response => {
-                        console.log('Proforma supprimée avec succès:', response.data);
+                        // console.log('Proforma supprimée avec succès:', response.data);
                         // Ajoutez ici le code pour gérer la réponse (par exemple, afficher un message de succès)
                     })
                     .catch(error => {
@@ -706,5 +723,9 @@ const form = useForm({
             }
         }
     }
+
+    .majuscule {
+            text-transform: uppercase;
+        }
 </style>
 

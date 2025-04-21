@@ -74,13 +74,13 @@
                     </tr>
                     <tr>
                         <td style="color: #000; font-weight: bold; font-size: 0.8rem;">TYPE PROFORMA : {{ $proforma->typeProforma }}</td>
-                        <td style="color: #000; font-weight: bold; font-size: 0.8rem;">D.A : {{ $proforma->da }}</td>
-                    </tr>
-                    <tr>
                         <td style="color: #000; font-weight: bold; font-size: 0.8rem;">CLIENT : {{ $proforma->client }}</td>
                         <td style="color: #000; font-weight: bold; font-size: 0.8rem;">ACHETEUR : {{ $proforma->acheteur }}</td>
-                        <td style="color: #000; font-weight: bold; font-size: 0.8rem;">VENDEUR : {{ $proforma->vendeur }}</td>
                     </tr>
+                    <!-- <tr>
+                        <td style="color: #000; font-weight: bold; font-size: 0.8rem;">CLIENT : {{ $proforma->client }}</td>
+                        <td style="color: #000; font-weight: bold; font-size: 0.8rem;">ACHETEUR : {{ $proforma->acheteur }}</td>
+                    </tr> -->
                 </table>
 
                 {{-- Ajoutez d'autres champs selon votre modèle Proforma --}}

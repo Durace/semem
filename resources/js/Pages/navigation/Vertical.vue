@@ -48,7 +48,7 @@
                                 </Link>
                             </li>
                             <li class="sidebar-item">
-                                <Link class="sidebar-link waves-effect waves-dark sidebar-link" href=" "
+                                <Link class="sidebar-link waves-effect waves-dark sidebar-link" href="liste-personnelle"
                                     aria-expanded="false"><i class="mdi mdi-blur-linear"></i><span class="hide-menu">
                                     LISTE </span>
                                 </Link>
@@ -65,20 +65,26 @@
                                     A CONVERTIR </span>
                                 </Link>
                             </li>
+                            <li class="sidebar-item">
+                                <Link class="sidebar-link waves-effect waves-dark sidebar-link" href="/"
+                                    aria-expanded="false"><i class="mdi mdi-blur-linear"></i><span class="hide-menu">
+                                    TABLEAU DE BORD </span>
+                                </Link>
+                            </li>
 
                         </ul>
                     </li>
 
                     <li class="sidebar-item">
                         <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)"
-                            aria-expanded="false"><i class="mdi mdi-blur-linear"></i><span class="hide-menu">PROFIL
+                            aria-expanded="false"><i class="mdi mdi-blur-linear"></i><span class="hide-menu">ADMIN
                             </span></a>
                         <ul aria-expanded="false" class="collapse first-level">
+                            
                             <li class="sidebar-item">
-                                <Link class="sidebar-link waves-effect waves-dark sidebar-link"
-                                    href="/" aria-expanded="false"><i
-                                    class="mdi mdi-blur-linear"></i><span class="hide-menu">
-                                    TABLEAU DE BORD </span>
+                                <Link class="sidebar-link waves-effect waves-dark sidebar-link" href="/liste-generale"
+                                    aria-expanded="false"><i class="mdi mdi-blur-linear"></i><span class="hide-menu">
+                                    LISTE </span>
                                 </Link>
                             </li>
                             <!-- <li class="sidebar-item">

@@ -7,6 +7,7 @@ use App\Http\Controllers\StockController;
 use App\Http\Controllers\ProformaController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AccueilController;
+use App\http\Controllers\ListController;
 
 
 Route::middleware('auth')->group(function (){
@@ -20,6 +21,11 @@ Route::middleware('auth')->group(function (){
     Route::get('/facturation-stock', [StockController::class, 'index'])->name('facturation.stock');
     Route::get('/stock-global', [StockController::class, 'stock_global'])->name('facturation.stock');
     Route::get('/get-stock/{codeArticle}', [StockController::class, 'getQuantites'])->name('facturation.stock');
+
+    Route::get('/liste-generale', [ListController::class, 'indexGeneral'])->name('liste-generale');
+
+    Route::get('liste-personnelle', [ListController::class, 'indexPersonnel'])->name('liste-personnelle');
+
 
     Route::get('/impression-facturation-proformas/{numProforma}', [ImpressionProformaController::class, 'index'])->name('impression.facturation.proformas.index');
 });

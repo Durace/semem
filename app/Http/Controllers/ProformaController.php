@@ -58,7 +58,7 @@ class ProformaController extends Controller
         );
 
         // Afficher la vue avec un message de succès
-        return inertia("facturation/proforma")->with('message', 'Proforma créé avec succès');
+        // return response()->json(['message'=> 'Proforma créé avec succès'], 500);
 
     }
 
